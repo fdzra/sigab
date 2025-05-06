@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import 'map_banjir_page.dart';
 
 class EditInformasiBanjirPage extends StatefulWidget {
   const EditInformasiBanjirPage({Key? key}) : super(key: key);
@@ -14,9 +17,10 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
   final TextEditingController _kedalaman1Controller = TextEditingController();
   final TextEditingController _kedalaman2Controller = TextEditingController();
   final TextEditingController _waktuController = TextEditingController();
-  final TextEditingController _lokasiController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  double? latitude;
+  double? longitude;
 
   @override
   void initState() {
@@ -26,7 +30,8 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
     _kedalaman1Controller.text = '125';
     _kedalaman2Controller.text = 'Tinggi';
     _waktuController.text = '01/04/2025, 8:30 WIB';
-    _lokasiController.text = 'Jl. H. Umayah 1 No.20, Citeureup, Kec. Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40257';
+    latitude = -6.975368;
+    longitude = 107.631033;
 
     // Parse the initial date and time from _waktuController
     try {
@@ -63,37 +68,37 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
     _kedalaman1Controller.dispose();
     _kedalaman2Controller.dispose();
     _waktuController.dispose();
-    _lokasiController.dispose();
     super.dispose();
   }
 
   void _updateTingkatKedalaman() {
     if (_kedalaman1Controller.text.isEmpty) {
-      _kedalaman2Controller.text = '';
+      setState(() {
+        _kedalaman2Controller.text = '';
+      });
       return;
     }
 
-    try {
-      int depth = int.parse(_kedalaman1Controller.text);
-      String tingkatKedalaman;
+    int depth = int.parse(_kedalaman1Controller.text);
+    String newDepth;
 
-      if (depth <= 50) {
-        tingkatKedalaman = 'Rendah';
-      } else if (depth <= 100) {
-        tingkatKedalaman = 'Sedang';
-      } else {
-        tingkatKedalaman = 'Tinggi';
-      }
-
-      _kedalaman2Controller.text = tingkatKedalaman;
-    } catch (e) {
-      // Handle invalid input
-      _kedalaman2Controller.text = '';
+    if (depth <= 50) {
+      newDepth = 'Rendah';
+    } else if (depth <= 100) {
+      newDepth = 'Sedang';
+    } else {
+      newDepth = 'Tinggi';
     }
+
+    setState(() {
+      _kedalaman2Controller.text = newDepth;
+    });
   }
 
   void _updateDateTime() {
-    _waktuController.text = '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}, ${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')} WIB';
+    setState(() {
+      _waktuController.text = '${selectedDate.day.toString().padLeft(2, '0')}/${selectedDate.month.toString().padLeft(2, '0')}/${selectedDate.year}, ${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')} WIB';
+    });
   }
 
   void _showSuccessDialog(BuildContext context) {
@@ -208,27 +213,30 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _wilayahController,
-              style: GoogleFonts.poppins(),
-              decoration: InputDecoration(
-                hintText: 'Masukkan wilayah banjir',
-                hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+            Container(
+              width: double.infinity,
+              child: TextField(
+                controller: _wilayahController,
+                style: GoogleFonts.poppins(),
+                decoration: InputDecoration(
+                  hintText: 'Masukkan wilayah banjir',
+                  hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
             const SizedBox(height: 16),
@@ -240,33 +248,36 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _kedalaman1Controller,
-              style: GoogleFonts.poppins(),
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-              ],
-              decoration: InputDecoration(
-                hintText: 'Masukkan tingkat kedalaman',
-                hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
-                filled: true,
-                fillColor: Colors.white,
-                suffixText: 'cm',
-                suffixStyle: GoogleFonts.poppins(color: const Color(0xFF016FB9)),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+            Container(
+              width: double.infinity,
+              child: TextField(
+                controller: _kedalaman1Controller,
+                style: GoogleFonts.poppins(),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: InputDecoration(
+                  hintText: 'Masukkan tingkat kedalaman',
+                  hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixText: 'cm',
+                  suffixStyle: GoogleFonts.poppins(color: const Color(0xFF016FB9)),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
             const SizedBox(height: 16),
@@ -278,32 +289,35 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _kedalaman2Controller,
-              style: GoogleFonts.poppins(color: Colors.black),
-              enabled: false,
-              decoration: InputDecoration(
-                hintText: 'Tingkat kedalaman akan terisi otomatis',
-                hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+            Container(
+              width: double.infinity,
+              child: TextField(
+                controller: _kedalaman2Controller,
+                style: GoogleFonts.poppins(color: Colors.black),
+                enabled: false,
+                decoration: InputDecoration(
+                  hintText: 'Tingkat kedalaman akan terisi otomatis',
+                  hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
             const SizedBox(height: 16),
@@ -315,48 +329,18 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               ),
             ),
             const SizedBox(height: 8),
-            InkWell(
-              onTap: () async {
-                final DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: selectedDate,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                  builder: (BuildContext context, Widget? child) {
-                    return Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: const ColorScheme.light(
-                          primary: Color(0xFF016FB9),
-                          onPrimary: Colors.white,
-                          surface: Colors.white,
-                          onSurface: Colors.black,
-                        ),
-                        dialogBackgroundColor: Colors.white,
-                      ),
-                      child: child!,
-                    );
-                  },
-                );
-                if (picked != null) {
-                  final TimeOfDay? timePicked = await showTimePicker(
+            Container(
+              width: double.infinity,
+              child: InkWell(
+                onTap: () async {
+                  final DateTime? picked = await showDatePicker(
                     context: context,
-                    initialTime: selectedTime,
+                    initialDate: selectedDate,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101),
                     builder: (BuildContext context, Widget? child) {
                       return Theme(
                         data: Theme.of(context).copyWith(
-                          timePickerTheme: TimePickerThemeData(
-                            backgroundColor: Colors.white,
-                            hourMinuteShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              side: const BorderSide(color: Color(0xFF016FB9)),
-                            ),
-                            dayPeriodBorderSide: const BorderSide(color: Color(0xFF016FB9)),
-                            dayPeriodColor: Colors.transparent,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(8)),
-                              side: BorderSide(color: Color(0xFF016FB9)),
-                            ),
-                          ),
                           colorScheme: const ColorScheme.light(
                             primary: Color(0xFF016FB9),
                             onPrimary: Colors.white,
@@ -365,40 +349,73 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                           ),
                           dialogBackgroundColor: Colors.white,
                         ),
-                        child: MediaQuery(
-                          data: MediaQuery.of(context).copyWith(
-                            alwaysUse24HourFormat: true,
-                          ),
-                          child: child!,
-                        ),
+                        child: child!,
                       );
                     },
                   );
-                  if (timePicked != null) {
-                    setState(() {
-                      selectedDate = picked;
-                      selectedTime = timePicked;
-                      _updateDateTime();
-                    });
+                  if (picked != null) {
+                    final TimeOfDay? timePicked = await showTimePicker(
+                      context: context,
+                      initialTime: selectedTime,
+                      builder: (BuildContext context, Widget? child) {
+                        return Theme(
+                          data: Theme.of(context).copyWith(
+                            timePickerTheme: TimePickerThemeData(
+                              backgroundColor: Colors.white,
+                              hourMinuteShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                side: const BorderSide(color: Color(0xFF016FB9)),
+                              ),
+                              dayPeriodBorderSide: const BorderSide(color: Color(0xFF016FB9)),
+                              dayPeriodColor: Colors.transparent,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8)),
+                                side: BorderSide(color: Color(0xFF016FB9)),
+                              ),
+                            ),
+                            colorScheme: const ColorScheme.light(
+                              primary: Color(0xFF016FB9),
+                              onPrimary: Colors.white,
+                              surface: Colors.white,
+                              onSurface: Colors.black,
+                            ),
+                            dialogBackgroundColor: Colors.white,
+                          ),
+                          child: MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                              alwaysUse24HourFormat: true,
+                            ),
+                            child: child!,
+                          ),
+                        );
+                      },
+                    );
+                    if (timePicked != null) {
+                      setState(() {
+                        selectedDate = picked;
+                        selectedTime = timePicked;
+                        _updateDateTime();
+                      });
+                    }
                   }
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: const Color(0xFF016FB9), width: 1.5),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      _waktuController.text,
-                      style: GoogleFonts.poppins(fontSize: 16),
-                    ),
-                    const Icon(Icons.calendar_today, color: Color(0xFF016FB9)),
-                  ],
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: const Color(0xFF016FB9), width: 1.5),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _waktuController.text,
+                        style: GoogleFonts.poppins(fontSize: 16),
+                      ),
+                      const Icon(Icons.calendar_today, color: Color(0xFF016FB9)),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -411,33 +428,104 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               ),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _lokasiController,
-              style: GoogleFonts.poppins(color: const Color(0xFF5C5C5C)),
-              enabled: false,
-              maxLines: 3,
-              decoration: InputDecoration(
-                hintText: 'Koordinat lokasi akan terisi otomatis',
-                hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
-                filled: true,
-                fillColor: const Color(0xFFE7E7E7),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: const Color(0xFF016FB9), width: 1.5),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MapBanjirPage(
+                        name: 'Lokasi Banjir',
+                        location: '',
+                        latitude: latitude ?? -6.975368,
+                        longitude: longitude ?? 107.631033,
+                        buttonText: 'Okay',
+                        onLocationSelected: (lat, lng) {
+                          setState(() {
+                            latitude = lat;
+                            longitude = lng;
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+                child: Stack(
+                  children: [
+                    FlutterMap(
+                      options: MapOptions(
+                        center: LatLng(
+                          latitude ?? -6.975368,
+                          longitude ?? 107.631033,
+                        ),
+                        zoom: 13.0,
+                        onTap: (_, __) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapBanjirPage(
+                                name: 'Lokasi Banjir',
+                                location: '',
+                                latitude: latitude ?? -6.975368,
+                                longitude: longitude ?? 107.631033,
+                                buttonText: 'Okay',
+                                onLocationSelected: (lat, lng) {
+                                  setState(() {
+                                    latitude = lat;
+                                    longitude = lng;
+                                  });
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.example.sigab',
+                        ),
+                        if (latitude != null && longitude != null)
+                          MarkerLayer(
+                            markers: [
+                              Marker(
+                                point: LatLng(latitude!, longitude!),
+                                child: const Icon(
+                                  Icons.location_on,
+                                  color: Color(0xFF016FB9),
+                                  size: 40,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                    if (latitude == null)
+                      Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.location_on, color: Color(0xFF016FB9), size: 48),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Pilih Lokasi',
+                              style: GoogleFonts.poppins(
+                                color: const Color(0xFF016FB9),
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                disabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
             const SizedBox(height: 24),

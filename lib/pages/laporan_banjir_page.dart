@@ -205,8 +205,7 @@ class FloodReportCard extends StatelessWidget {
         : description;
 
     return Container(
-      width: 365,
-      height: 112,
+      width: double.infinity,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

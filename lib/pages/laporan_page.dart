@@ -93,39 +93,9 @@ class LaporanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F8F8),
-      appBar: AppBar(
-        title: const Text(
-          'Laporan',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
-        ),
-        centerTitle: true,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Image.asset(
-            'assets/img/sigab_logo.png',
-            fit: BoxFit.contain,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.logout,
-              color: Color(0xFF0077B6),
-            ),
-            onPressed: () => _showLogoutDialog(context),
-          ),
-          const SizedBox(width: 8),
-        ],
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: Padding(
+    return Container(
+      color: const Color(0xFFF8F8F8),
+      child: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
@@ -150,46 +120,6 @@ class LaporanPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF0077B6),
-        unselectedItemColor: const Color(0xFF8C8C8C),
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        onTap: (index) {
-          if (index == 2) { // Index 2 is Info Banjir
-            Navigator.pushNamed(context, '/info-banjir');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Banjir',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Mitigasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'Evakuasi',
-          ),
-        ],
       ),
     );
   }
@@ -224,6 +154,8 @@ class _LaporanCardState extends State<LaporanCard> {
           // Navigasi ke halaman yang sesuai berdasarkan judul
           if (widget.title == 'Banjir') {
             Navigator.pushNamed(context, '/laporan-banjir');
+          } else if (widget.title.contains('Infrastruktur')) {
+            Navigator.pushNamed(context, '/laporan-kerusakan');
           }
         },
         borderRadius: BorderRadius.circular(12),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'histori_verifikasi_page.dart';
 
-class DetailLaporanBanjirPage extends StatefulWidget {
+class DetailLaporanKerusakanPage extends StatefulWidget {
   final String name;
   final String location;
   final String description;
@@ -11,7 +10,7 @@ class DetailLaporanBanjirPage extends StatefulWidget {
   final double latitude;
   final double longitude;
 
-  const DetailLaporanBanjirPage({
+  const DetailLaporanKerusakanPage({
     Key? key,
     required this.name,
     required this.location,
@@ -21,25 +20,11 @@ class DetailLaporanBanjirPage extends StatefulWidget {
     required this.longitude,
   }) : super(key: key);
 
-  static Route<dynamic> route(RouteSettings settings) {
-    final args = settings.arguments as Map<String, dynamic>;
-    return MaterialPageRoute(
-      builder: (context) => DetailLaporanBanjirPage(
-        name: args['name'] as String,
-        location: args['location'] as String,
-        description: args['description'] as String,
-        imageUrl: args['imageUrl'] as String,
-        latitude: args['latitude'] as double,
-        longitude: args['longitude'] as double,
-      ),
-    );
-  }
-
   @override
-  State<DetailLaporanBanjirPage> createState() => _DetailLaporanBanjirPageState();
+  State<DetailLaporanKerusakanPage> createState() => _DetailLaporanKerusakanPageState();
 }
 
-class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
+class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage> {
   late LatLng _center;
   late MapController mapController;
 
@@ -48,178 +33,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
     super.initState();
     _center = LatLng(widget.latitude, widget.longitude);
     mapController = MapController();
-  }
-
-  void _showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          backgroundColor: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFF0EDD06),
-                      width: 2,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Color(0xFF0EDD06),
-                    size: 32,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Diterima!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Laporan telah berhasil\ndiverifikasi',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA726),
-                    minimumSize: const Size.fromHeight(45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const HistoriVerifikasiPage(initialShowAccepted: true),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Okay',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showRejectionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          backgroundColor: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 2,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 32,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Ditolak!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Laporan tidak valid',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA726),
-                    minimumSize: const Size.fromHeight(45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const HistoriVerifikasiPage(initialShowAccepted: false),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    'Okay',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
   }
 
   Widget _buildMapSection() {
@@ -496,7 +309,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
               ),
             ),
             Container(
-              width: double.infinity,
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -528,7 +340,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
               ),
             ),
             Container(
-              width: double.infinity,
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -578,63 +389,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
                     );
                   },
                 ),
-              ),
-            ),
-
-            // Validation Buttons
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFFFA726),
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {
-                        _showSuccessDialog(context);
-                      },
-                      child: const Text(
-                        'Valid',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        side: const BorderSide(
-                          color: Color(0xFFFFA726),
-                          width: 2,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: () {
-                        _showRejectionDialog(context);
-                      },
-                      child: const Text(
-                        'Tidak Valid',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFFFA726),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],

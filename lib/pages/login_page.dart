@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
               // Login button
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/laporan');
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFBB03B),

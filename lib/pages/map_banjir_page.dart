@@ -10,6 +10,7 @@ class MapBanjirPage extends StatefulWidget {
   final double latitude;
   final double longitude;
   final Function(double, double)? onLocationSelected;
+  final String buttonText;
 
   const MapBanjirPage({
     Key? key,
@@ -18,6 +19,7 @@ class MapBanjirPage extends StatefulWidget {
     required this.latitude,
     required this.longitude,
     this.onLocationSelected,
+    this.buttonText = 'Konfirmasi',
   }) : super(key: key);
 
   @override
@@ -273,7 +275,7 @@ class _MapBanjirPageState extends State<MapBanjirPage> {
                         ),
                       ),
                       child: Text(
-                        'Konfirmasi',
+                        widget.buttonText,
                         style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
