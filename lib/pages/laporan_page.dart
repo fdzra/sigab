@@ -3,94 +3,6 @@ import 'package:flutter/material.dart';
 class LaporanPage extends StatelessWidget {
   const LaporanPage({Key? key}) : super(key: key);
 
-  Future<void> _showLogoutDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          backgroundColor: Colors.white,
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.logout,
-                  size: 48,
-                  color: Colors.black54,
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  'Apakah Anda yakin ingin\nkeluar dari aplikasi?',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFA726),
-                    minimumSize: const Size.fromHeight(45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    // Close the dialog first
-                    Navigator.of(context).pop();
-                    // Then navigate to login page and clear the navigation stack
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/login',
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                  child: const Text(
-                    'Ya, Keluar',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 12),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(45),
-                    side: const BorderSide(color: Color(0xFFFFA726)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
-                  },
-                  child: const Text(
-                    'Tetap di Aplikasi',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFFFFA726),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -211,4 +123,4 @@ class _LaporanCardState extends State<LaporanCard> {
       ),
     );
   }
-} 
+}

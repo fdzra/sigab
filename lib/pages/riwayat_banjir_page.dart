@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_map/flutter_map.dart' as flutterMap;
-import 'package:latlong2/latlong.dart' as latlong;
 import 'detail_riwayat_banjir_page.dart';
 
 class RiwayatBanjirPage extends StatelessWidget {
