@@ -5,9 +5,8 @@ import 'pages/laporan_page.dart';
 import 'pages/laporan_banjir_page.dart';
 import 'pages/informasi_banjir_page.dart';
 import 'pages/laporan_kerusakan_page.dart';
-import 'pages/detail_laporan_kerusakan_page.dart';
 import 'pages/detail_laporan_banjir_page.dart';
-import 'pages/beranda_page.dart';  // Pastikan file ini mengexport HomePage
+import 'pages/beranda_page.dart';  
 import 'pages/detail_riwayat_banjir_page.dart';
 
 void main() {

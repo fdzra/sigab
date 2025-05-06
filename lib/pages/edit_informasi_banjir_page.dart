@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'map_banjir_page.dart';
 
 class EditInformasiBanjirPage extends StatefulWidget {
   const EditInformasiBanjirPage({Key? key}) : super(key: key);
