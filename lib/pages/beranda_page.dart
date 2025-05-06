@@ -8,6 +8,7 @@ import 'package:flutter_map/flutter_map.dart' as flutterMap;
 import 'package:latlong2/latlong.dart' as latlong;
 import 'detail_riwayat_banjir_page.dart';
 import 'riwayat_banjir_page.dart';
+import 'detail_banjir_terkini_page.dart';  
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -309,7 +310,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailRiwayatBanjirPage(
+                                                    builder: (context) => DetailBanjirTerkiniPage(  // Ubah ini
                                                       koordinat: 'Citeureup (-6.9175 LS, 107.6191 BT)',
                                                       tanggal: '20 Januari 2024, 08:30 WIB',
                                                       tingkatKedalaman: 'Tinggi',
@@ -363,8 +364,8 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailRiwayatBanjirPage(
-                                                      koordinat: 'Citeureup (0.07 LS, 109.37 BT)',
+                                                    builder: (context) => DetailBanjirTerkiniPage(
+                                                      koordinat: 'Citeureup (-6.9200 LS, 107.6150 BT)',
                                                       tanggal: '15 Januari 2024, 14:20 WIB',
                                                       tingkatKedalaman: 'Sedang',
                                                       jarak: '8 Km dari lokasi anda',
@@ -417,8 +418,8 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailRiwayatBanjirPage(
-                                                      koordinat: 'Citeureup (0.07 LS, 109.37 BT)',
+                                                    builder: (context) => DetailBanjirTerkiniPage(
+                                                      koordinat: 'Citeureup (-6.9150 LS, 107.6170 BT)',
                                                       tanggal: '10 Januari 2024, 10:15 WIB',
                                                       tingkatKedalaman: 'Rendah',
                                                       jarak: '12 Km dari lokasi anda',
@@ -686,7 +687,7 @@ class _BerandaContentState extends State<BerandaContent> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.blue.shade200),
+                border: Border.all(color: const Color(0xFF016FB9)),
               ),
               child: InkWell(
                 onTap: () {

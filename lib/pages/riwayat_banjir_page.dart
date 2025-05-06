@@ -77,7 +77,7 @@ class RiwayatBanjirPage extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue.shade200),
+        border: Border.all(color: const Color(0xFF016FB9)),
       ),
       child: InkWell(
         onTap: () {

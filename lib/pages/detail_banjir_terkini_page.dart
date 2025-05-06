@@ -3,7 +3,7 @@ import 'package:flutter_map/flutter_map.dart' as flutterMap;
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:google_fonts/google_fonts.dart';
 
-class DetailRiwayatBanjirPage extends StatefulWidget {
+class DetailBanjirTerkiniPage extends StatefulWidget {
   final String koordinat;
   final String tanggal;
   final String tingkatKedalaman;
@@ -11,7 +11,7 @@ class DetailRiwayatBanjirPage extends StatefulWidget {
   final String wilayah;
   final Color warna;
 
-  const DetailRiwayatBanjirPage({
+  const DetailBanjirTerkiniPage({
     Key? key,
     required this.koordinat,
     required this.tanggal,
@@ -22,10 +22,10 @@ class DetailRiwayatBanjirPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DetailRiwayatBanjirPage> createState() => _DetailRiwayatBanjirPageState();
+  State<DetailBanjirTerkiniPage> createState() => _DetailBanjirTerkiniPageState();
 }
 
-class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
+class _DetailBanjirTerkiniPageState extends State<DetailBanjirTerkiniPage> {
   late flutterMap.MapController _mapController;
   late flutterMap.MapController _fullScreenMapController;
   late latlong.LatLng _center;
@@ -36,27 +36,140 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
     _mapController = flutterMap.MapController();
     _fullScreenMapController = flutterMap.MapController();
     
-    // Perbaikan pengecekan koordinat
     try {
       if (widget.koordinat.isNotEmpty) {
-        final parts = widget.koordinat.split(',');
-        if (parts.length == 2) {
-          final lat = double.tryParse(parts[0].trim());
-          final lng = double.tryParse(parts[1].trim());
-          if (lat != null && lng != null) {
-            _center = latlong.LatLng(lat, lng);
-          } else {
-            _center = latlong.LatLng(-6.9175, 107.6191); // koordinat default
-          }
+        // Mengekstrak koordinat dari format "Citeureup (0.07 LS, 109.37 BT)"
+        final regex = RegExp(r'.*\(([-\d.]+)\s*LS,\s*([-\d.]+)\s*BT\)');
+        final match = regex.firstMatch(widget.koordinat);
+        
+        if (match != null) {
+          final lat = double.tryParse(match.group(1)?.trim() ?? '') ?? -6.975368;
+          final lng = double.tryParse(match.group(2)?.trim() ?? '') ?? 107.631033;
+          _center = latlong.LatLng(lat, lng); // Hapus tanda negatif untuk LS
+          debugPrint('Koordinat berhasil diparsing: ${_center.latitude}, ${_center.longitude}');
         } else {
-          _center = latlong.LatLng(-6.9175, 107.6191); // koordinat default
+          debugPrint('Format koordinat tidak sesuai: ${widget.koordinat}');
+          _center = latlong.LatLng(-6.975368, 107.631033);
         }
       } else {
-        _center = latlong.LatLng(-6.9175, 107.6191); // koordinat default
+        _center = latlong.LatLng(-6.975368, 107.631033);
       }
     } catch (e) {
-      _center = latlong.LatLng(-6.9175, 107.6191); // koordinat default jika terjadi error
+      debugPrint('Error parsing koordinat: $e');
+      _center = latlong.LatLng(-6.975368, 107.631033);
     }
+  }
+
+  void _showFullscreenMap() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.close, color: Color(0xFF016FB9)),
+              onPressed: () => Navigator.pop(context),
+            ),
+            title: Text(
+              widget.koordinat,
+              style: GoogleFonts.poppins(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0,
+          ),
+          body: Stack(
+            children: [
+              flutterMap.FlutterMap(
+                mapController: _fullScreenMapController,
+                options: flutterMap.MapOptions(
+                  center: _center,
+                  zoom: 15.0,
+                ),
+                children: [
+                  flutterMap.TileLayer(
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.example.sigab',
+                  ),
+                  flutterMap.MarkerLayer(
+                    markers: [
+                      flutterMap.Marker(
+                        point: _center,
+                        width: 80,
+                        height: 80,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 80,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                color: widget.warna.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                            Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: widget.warna,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.home,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Positioned(
+                right: 16,
+                bottom: 16,
+                child: Column(
+                  children: [
+                    FloatingActionButton(
+                      heroTag: "zoomInFull",
+                      onPressed: () {
+                        final currentZoom = _fullScreenMapController.zoom;
+                        _fullScreenMapController.move(
+                          _fullScreenMapController.center,
+                          currentZoom + 1,
+                        );
+                      },
+                      mini: true,
+                      backgroundColor: Colors.white,
+                      child: const Icon(Icons.add, color: Color(0xFF016FB9)),
+                    ),
+                    const SizedBox(height: 8),
+                    FloatingActionButton(
+                      heroTag: "zoomOutFull",
+                      onPressed: () {
+                        final currentZoom = _fullScreenMapController.zoom;
+                        _fullScreenMapController.move(
+                          _fullScreenMapController.center,
+                          currentZoom - 1,
+                        );
+                      },
+                      mini: true,
+                      backgroundColor: Colors.white,
+                      child: const Icon(Icons.remove, color: Color(0xFF016FB9)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -69,7 +182,7 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Detail Riwayat Banjir',
+          'Detail Banjir Terkini',
           style: GoogleFonts.poppins(
             fontSize: 20,
             color: Colors.black,
@@ -84,7 +197,8 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 250,
+              height: 250, // pastikan tinggi cukup
+              width: double.infinity, // tambahkan lebar
               margin: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
@@ -99,6 +213,8 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                       options: flutterMap.MapOptions(
                         center: _center,
                         zoom: 15.0,
+                        interactiveFlags: flutterMap.InteractiveFlag.all & ~flutterMap.InteractiveFlag.rotate,
+                        onTap: (_, __) => _showFullscreenMap(),
                       ),
                       children: [
                         flutterMap.TileLayer(
@@ -146,129 +262,12 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                       right: 8,
                       top: 8,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Scaffold(
-                                appBar: AppBar(
-                                  leading: IconButton(
-                                    icon: const Icon(Icons.close, color: Color(0xFF016FB9)),
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                  title: Text(
-                                    widget.koordinat,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  elevation: 0,
-                                ),
-                                body: Stack(
-                                  children: [
-                                    flutterMap.FlutterMap(
-                                      mapController: _fullScreenMapController,
-                                      options: flutterMap.MapOptions(
-                                        center: _center,  // Gunakan _center yang sudah diinisialisasi
-                                        zoom: 15.0,
-                                      ),
-                                      children: [
-                                        flutterMap.TileLayer(
-                                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                          userAgentPackageName: 'com.example.sigab',
-                                        ),
-                                        flutterMap.MarkerLayer(
-                                          markers: [
-                                            flutterMap.Marker(
-                                              point: _center,  // Gunakan _center yang sudah diinisialisasi
-                                              width: 80,
-                                              height: 80,
-                                              child: Stack(
-                                                alignment: Alignment.center,
-                                                children: [
-                                                  Container(
-                                                    width: 80,
-                                                    height: 80,
-                                                    decoration: BoxDecoration(
-                                                      color: widget.warna.withOpacity(0.3),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: widget.warna,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: const Icon(
-                                                      Icons.home,
-                                                      color: Colors.white,
-                                                      size: 20,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      right: 16,
-                                      bottom: 16,
-                                      child: Column(
-                                        children: [
-                                          FloatingActionButton(
-                                            heroTag: "zoomInFull",
-                                            onPressed: () {
-                                              final currentZoom = _fullScreenMapController.zoom;
-                                              _fullScreenMapController.move(
-                                                _fullScreenMapController.center,
-                                                currentZoom + 1,
-                                              );
-                                            },
-                                            mini: true,
-                                            backgroundColor: Colors.white,
-                                            child: const Icon(Icons.add, color: Color(0xFF016FB9)),
-                                          ),
-                                          const SizedBox(height: 8),
-                                          FloatingActionButton(
-                                            heroTag: "zoomOutFull",
-                                            onPressed: () {
-                                              final currentZoom = _fullScreenMapController.zoom;
-                                              _fullScreenMapController.move(
-                                                _fullScreenMapController.center,
-                                                currentZoom - 1,
-                                              );
-                                            },
-                                            mini: true,
-                                            backgroundColor: Colors.white,
-                                            child: const Icon(Icons.remove, color: Color(0xFF016FB9)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
+                        onTap: _showFullscreenMap,
                         child: Container(
                           padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 4,
-                                offset: const Offset(0, 2),
-                              ),
-                            ],
                           ),
                           child: const Icon(
                             Icons.fullscreen,
@@ -286,7 +285,7 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
               margin: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
@@ -301,19 +300,22 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(Icons.location_on, color: Colors.grey, size: 20),
                         const SizedBox(width: 8),
-                        Text(
-                          widget.koordinat,
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            color: Colors.grey,
+                        Expanded(
+                          child: Text(
+                            widget.koordinat,
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Text(
                       'Banjir',
                       style: GoogleFonts.poppins(
@@ -331,10 +333,10 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                     ),
                     const SizedBox(height: 12),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                       decoration: BoxDecoration(
                         color: widget.warna,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                       child: Text(
                         'Tingkat Kedalaman: ${widget.tingkatKedalaman}',
