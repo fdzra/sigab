@@ -481,7 +481,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Map Section
             _buildMapSection(),
 
             // Location Section
@@ -640,46 +639,6 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF0077B6),
-        unselectedItemColor: const Color(0xFF8C8C8C),
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        onTap: (index) {
-          if (index == 2) {
-            Navigator.pushNamed(context, '/info-banjir');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Banjir',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Mitigasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'Evakuasi',
-          ),
-        ],
-      ),
     );
   }
-} 
+}

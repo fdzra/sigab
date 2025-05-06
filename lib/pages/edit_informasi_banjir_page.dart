@@ -432,30 +432,17 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
               height: 200,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: const Color(0xFF016FB9), width: 1.5),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MapBanjirPage(
-                        name: 'Lokasi Banjir',
-                        location: '',
-                        latitude: latitude ?? -6.975368,
-                        longitude: longitude ?? 107.631033,
-                        buttonText: 'Okay',
-                        onLocationSelected: (lat, lng) {
-                          setState(() {
-                            latitude = lat;
-                            longitude = lng;
-                          });
-                        },
-                      ),
-                    ),
-                  );
-                },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
                 child: Stack(
                   children: [
                     FlutterMap(
@@ -464,66 +451,169 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                           latitude ?? -6.975368,
                           longitude ?? 107.631033,
                         ),
-                        zoom: 13.0,
-                        onTap: (_, __) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MapBanjirPage(
-                                name: 'Lokasi Banjir',
-                                location: '',
-                                latitude: latitude ?? -6.975368,
-                                longitude: longitude ?? 107.631033,
-                                buttonText: 'Okay',
-                                onLocationSelected: (lat, lng) {
-                                  setState(() {
-                                    latitude = lat;
-                                    longitude = lng;
-                                  });
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                        zoom: 15.0,
+                        interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
                       ),
                       children: [
                         TileLayer(
                           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                           userAgentPackageName: 'com.example.sigab',
                         ),
-                        if (latitude != null && longitude != null)
-                          MarkerLayer(
-                            markers: [
-                              Marker(
-                                point: LatLng(latitude!, longitude!),
-                                child: const Icon(
-                                  Icons.location_on,
-                                  color: Color(0xFF016FB9),
-                                  size: 40,
-                                ),
+                        MarkerLayer(
+                          markers: [
+                            Marker(
+                              point: LatLng(latitude ?? -6.975368, longitude ?? 107.631033),
+                              width: 40,
+                              height: 40,
+                              child: const Icon(
+                                Icons.location_on,
+                                color: Color(0xFF016FB9),
+                                size: 40,
                               ),
-                            ],
-                          ),
-                      ],
-                    ),
-                    if (latitude == null)
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.location_on, color: Color(0xFF016FB9), size: 48),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Pilih Lokasi',
-                              style: GoogleFonts.poppins(
-                                color: const Color(0xFF016FB9),
-                                fontSize: 14,
-                              ),
-                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 8,
+                      left: 8,
+                      right: 8,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Text(
+                          '${latitude ?? -6.975368}, ${longitude ?? 107.631033}',
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            color: Colors.black87,
+                          ),
+                        ),
                       ),
+                    ),
+                    Positioned(
+                      bottom: 8,
+                      right: 8,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.fullscreen, color: Color(0xFF016FB9)),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Dialog(
+                                backgroundColor: Colors.transparent,
+                                insetPadding: EdgeInsets.zero,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: MediaQuery.of(context).size.height,
+                                      child: FlutterMap(
+                                        options: MapOptions(
+                                          center: LatLng(
+                                            latitude ?? -6.975368,
+                                            longitude ?? 107.631033,
+                                          ),
+                                          zoom: 15.0,
+                                          interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                                        ),
+                                        children: [
+                                          TileLayer(
+                                            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                            userAgentPackageName: 'com.example.sigab',
+                                          ),
+                                          MarkerLayer(
+                                            markers: [
+                                              Marker(
+                                                point: LatLng(latitude ?? -6.975368, longitude ?? 107.631033),
+                                                width: 40,
+                                                height: 40,
+                                                child: const Icon(
+                                                  Icons.location_on,
+                                                  color: Color(0xFF016FB9),
+                                                  size: 40,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 40,
+                                      right: 16,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(30),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              blurRadius: 4,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: IconButton(
+                                          icon: const Icon(Icons.close, color: Color(0xFF016FB9)),
+                                          onPressed: () => Navigator.pop(context),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 40,
+                                      left: 16,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(30),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.1),
+                                              blurRadius: 4,
+                                              offset: const Offset(0, 2),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Text(
+                                          '${latitude ?? -6.975368}, ${longitude ?? 107.631033}',
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -559,46 +649,6 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 2,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF0077B6),
-        unselectedItemColor: const Color(0xFF8C8C8C),
-        selectedLabelStyle: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold,
-        ),
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.pushNamed(context, '/laporan');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Banjir',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Mitigasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'Evakuasi',
-          ),
-        ],
-      ),
     );
   }
-} 
+}

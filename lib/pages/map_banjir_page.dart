@@ -131,9 +131,9 @@ class _MapBanjirPageState extends State<MapBanjirPage> {
                 _updateMarker(position);
               },
               enableScrollWheel: true,
-              interactiveFlags: InteractiveFlag.all,
+              interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
               onPositionChanged: (MapPosition position, bool hasGesture) {
-                if (_isDragging && position.center != null) {
+                if (hasGesture && position.center != null) {
                   _updateMarker(position.center!);
                 }
               },
@@ -215,7 +215,7 @@ class _MapBanjirPageState extends State<MapBanjirPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Tentukan lokasi',
+                    'Tentukan Koordinat lokasi',
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -292,4 +292,4 @@ class _MapBanjirPageState extends State<MapBanjirPage> {
       ),
     );
   }
-} 
+}

@@ -181,7 +181,7 @@ class _DetailInformasiBanjirPageState extends State<DetailInformasiBanjirPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  _buildInfoRow('Wilayah', widget.wilayah),
+                  _buildInfoRow('Wilayah Banjir', widget.wilayah),
                   const SizedBox(height: 12),
                   _buildInfoRow('Tingkat Kedalaman (cm)', '${widget.kedalaman} cm'),
                   const SizedBox(height: 12),
@@ -332,4 +332,4 @@ class _DetailInformasiBanjirPageState extends State<DetailInformasiBanjirPage> {
       ],
     );
   }
-} 
+}

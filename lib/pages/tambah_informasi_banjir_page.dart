@@ -393,7 +393,7 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => MapBanjirPage(
-                        name: 'Lokasi Banjir',
+                        name: 'Koordinat Lokasi',
                         location: '',
                         latitude: latitude ?? -6.975368,
                         longitude: longitude ?? 107.631033,
@@ -421,7 +421,7 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => MapBanjirPage(
-                                name: 'Lokasi Banjir',
+                                name: 'Koordinat Lokasi',
                                 location: '',
                                 latitude: latitude ?? -6.975368,
                                 longitude: longitude ?? 107.631033,
@@ -464,10 +464,11 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                             const Icon(Icons.location_on, color: Color(0xFF016FB9), size: 48),
                             const SizedBox(height: 8),
                             Text(
-                              'Pilih Lokasi',
+                              'Tentukan Koordinat Lokasi',
                               style: GoogleFonts.poppins(
                                 color: const Color(0xFF016FB9),
                                 fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -509,46 +510,6 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 2,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF0077B6),
-        unselectedItemColor: const Color(0xFF8C8C8C),
-        selectedLabelStyle: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: GoogleFonts.poppins(
-          fontWeight: FontWeight.bold,
-        ),
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.pushNamed(context, '/laporan');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Banjir',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Mitigasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'Evakuasi',
-          ),
-        ],
-      ),
     );
   }
-} 
+}

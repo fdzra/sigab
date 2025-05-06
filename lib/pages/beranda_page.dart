@@ -268,13 +268,17 @@ class _BerandaContentState extends State<BerandaContent> {
                                     color: const Color(0xFF016FB9),
                                     onPressed: () => Navigator.pop(context),
                                   ),
-                                  const Text(
-                                    'Lokasi Banjir Terkini',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                  const Expanded(
+                                    child: Text(
+                                      'Lokasi Banjir Terkini',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
+                                  const SizedBox(width: 48), // Untuk menyeimbangkan dengan lebar IconButton
                                 ],
                               ),
                             ),

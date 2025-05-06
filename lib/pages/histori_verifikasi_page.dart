@@ -173,41 +173,6 @@ class _HistoriVerifikasiPageState extends State<HistoriVerifikasiPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: 1,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFF0077B6),
-        unselectedItemColor: const Color(0xFF8C8C8C),
-        selectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description),
-            label: 'Laporan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info Banjir',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Mitigasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'Evakuasi',
-          ),
-        ],
-      ),
     );
   }
 }
@@ -335,4 +300,4 @@ class VerificationCard extends StatelessWidget {
       ),
     );
   }
-} 
+}
