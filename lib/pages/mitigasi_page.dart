@@ -62,8 +62,8 @@ class MitigasiPage extends StatelessWidget {
               itemCount: 4, // Untuk demonstrasi, menampilkan 4 item
               itemBuilder: (context, index) {
                 return MitigasiCard(
-                  title: 'Tips Aman Menghadapi...',
-                  subtitle: 'Musim penghujan...',
+                  title: "Tips Aman Menghadapi Banjir...",
+                  subtitle: "Musim penghujan seringkali...",
                   date: '01/04/2025, 8:30 WIB',
                 );
               },
@@ -115,7 +115,7 @@ class MitigasiCard extends StatelessWidget {
                 builder: (context) => DetailTipsMitigasiBencanaPage(
                   judul: title,
                   deskripsi: subtitle,
-                  gambar: null, // Anda bisa menambahkan gambar jika ada
+                  gambar: null, 
                   tanggal: date,
                 ),
               ),

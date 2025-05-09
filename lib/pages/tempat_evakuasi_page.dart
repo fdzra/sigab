@@ -245,7 +245,6 @@ class TempatEvakuasiPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return EvakuasiCard(
                   title: 'Masjid An-Nur Sukabirus',
-                  subtitle: 'Guna memastikan...',
                   date: '01/04/2025, 8:30 WIB',
                   onDelete: () => _showDeleteConfirmationDialog(context), 
                 );
@@ -261,14 +260,12 @@ class TempatEvakuasiPage extends StatelessWidget {
 // Pertama, buat widget EvakuasiCard
 class EvakuasiCard extends StatelessWidget {
   final String title;
-  final String subtitle;
   final String date;
   final VoidCallback onDelete; // Tambahkan parameter onDelete
 
   const EvakuasiCard({
     Key? key,
     required this.title,
-    required this.subtitle,
     required this.date,
     required this.onDelete, // Tambahkan ini ke constructor
   }) : super(key: key);
@@ -302,6 +299,7 @@ class EvakuasiCard extends StatelessWidget {
                   namaTempat: title,
                   gambar: "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?q=80",
                   linkMaps: "https://maps.app.goo.gl/beSCEvR4rQhvM3",
+                  tanggal: date, // Tambahkan parameter tanggal
                 ),
               ),
             );
@@ -315,10 +313,11 @@ class EvakuasiCard extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Expanded(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -327,14 +326,6 @@ class EvakuasiCard extends StatelessWidget {
                               color: Colors.white,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            subtitle,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
                             ),
                           ),
                         ],
@@ -391,5 +382,3 @@ class EvakuasiCard extends StatelessWidget {
     );
   }
 }
-
-// Kemudian, gunakan EvakuasiCard di dalam ListView.builder

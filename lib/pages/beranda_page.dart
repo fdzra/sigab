@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return 'Informasi Banjir';
       case 3:
-        return 'Mitigasi Bencana';
+        return 'Tips Mitigasi Bencana';
       case 4:
         return 'Tempat Evakuasi';
       default:
@@ -97,7 +97,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
-                    // Then navigate to login page and clear the navigation stack
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       '/login',
                       (Route<dynamic> route) => false,

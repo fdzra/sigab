@@ -343,7 +343,7 @@ class FloodInfoCard extends StatelessWidget {
                                 style: TextStyle(color: Colors.white),
                               ),
                               Text(
-                                depthLevel,
+                                '$depthLevel ($depth cm)',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

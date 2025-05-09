@@ -5,12 +5,14 @@ class DetailTempatEvakuasiPage extends StatefulWidget {
   final String namaTempat;
   final String gambar;
   final String linkMaps;
+  final String tanggal; // Tambah parameter tanggal
 
   const DetailTempatEvakuasiPage({
     Key? key,
     required this.namaTempat,
     required this.gambar,
     required this.linkMaps,
+    required this.tanggal, // Tambah parameter tanggal di constructor
   }) : super(key: key);
 
   @override
@@ -97,6 +99,8 @@ class _DetailTempatEvakuasiPageState extends State<DetailTempatEvakuasiPage> {
                   _buildInfoRow('Nama Tempat', widget.namaTempat),
                   const SizedBox(height: 12),
                   _buildInfoRow('Link Google Maps', widget.linkMaps),
+                  const SizedBox(height: 12),
+                  _buildInfoRow('Tanggal', widget.tanggal), // Pindahkan tanggal ke bawah
                 ],
               ),
             ),
