@@ -9,6 +9,8 @@ import 'package:latlong2/latlong.dart' as latlong;
 import 'detail_riwayat_banjir_page.dart';
 import 'riwayat_banjir_page.dart';
 import 'detail_banjir_terkini_page.dart';  
+import 'mitigasi_page.dart';
+import 'tempat_evakuasi_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,8 +27,8 @@ class _HomePageState extends State<HomePage> {
     const BerandaContent(),
     const LaporanPage(),
     const InformasiBanjirPage(),
-    const Center(child: Text('Mitigasi Page - Coming Soon')),
-    const Center(child: Text('Evakuasi Page - Coming Soon')),
+    const MitigasiPage(), 
+    const TempatEvakuasiPage(),
   ];
 
   String _getTitle(int index) {
@@ -38,9 +40,9 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return 'Informasi Banjir';
       case 3:
-        return 'Mitigasi';
+        return 'Mitigasi Bencana';
       case 4:
-        return 'Evakuasi';
+        return 'Tempat Evakuasi';
       default:
         return 'Beranda';
     }
@@ -94,7 +96,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onPressed: () {
-                    // Close the dialog first
                     Navigator.of(context).pop();
                     // Then navigate to login page and clear the navigation stack
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -121,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pop(); // Close dialog
+                    Navigator.of(context).pop(); 
                   },
                   child: const Text(
                     'Tetap di Aplikasi',
@@ -279,7 +280,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(width: 48), // Untuk menyeimbangkan dengan lebar IconButton
+                                  const SizedBox(width: 48), 
                                 ],
                               ),
                             ),
@@ -852,7 +853,7 @@ class _BerandaContentState extends State<BerandaContent> {
               date: DateTime(2025, 4, 1),
               time: '8:05 WIB',
             ),
-            const SizedBox(height: 2), // Mengubah height dari 8 menjadi 2
+            const SizedBox(height: 2), 
             FloodReportCard(
               name: 'Farel',
               description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
