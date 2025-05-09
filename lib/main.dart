@@ -12,7 +12,6 @@ import 'pages/detail_riwayat_banjir_page.dart';
 void main() {
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -26,6 +25,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
+        ),
+        primaryColor: const Color(0xFF016FB9),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFF016FB9),
+          selectionColor: Color(0xFFC4DAE9), // Warna background highlight teks
         ),
       ),
       initialRoute: '/login',
