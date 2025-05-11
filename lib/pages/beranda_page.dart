@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -310,7 +310,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailBanjirTerkiniPage(  // Ubah ini
+                                                    builder: (context) => DetailBanjirTerkiniPage(  
                                                       koordinat: 'Citeureup (-6.9175 LS, 107.6191 BT)',
                                                       tanggal: '20 Januari 2024, 08:30 WIB',
                                                       tingkatKedalaman: 'Tinggi',
