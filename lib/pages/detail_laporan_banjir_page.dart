@@ -519,7 +519,7 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                widget.location,  // Mengubah dari widget.whatsapp ke widget.location
+                widget.location,  
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black87,

@@ -182,7 +182,7 @@ class _DetailBanjirTerkiniPageState extends State<DetailBanjirTerkiniPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Detail Banjir Terkini',
+          'Detail Lokasi Banjir Terkini',
           style: GoogleFonts.poppins(
             fontSize: 20,
             color: Colors.black,
