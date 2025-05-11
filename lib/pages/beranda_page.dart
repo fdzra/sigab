@@ -265,7 +265,7 @@ class _BerandaContentState extends State<BerandaContent> {
                               child: Row(
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.arrow_back),
+                                    icon: const Icon(Icons.arrow_back_ios),
                                     color: const Color(0xFF016FB9),
                                     onPressed: () => Navigator.pop(context),
                                   ),

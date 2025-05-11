@@ -238,7 +238,7 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
                       child: Row(
                         children: [
                           Text(
-                            'Lokasi',
+                            'Koordinat Lokasi',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

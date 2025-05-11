@@ -19,7 +19,7 @@ class _TambahTipsMitigasiPageState extends State<TambahTipsMitigasiPage> {
       backgroundColor: const Color(0xFFF8F8F8),
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF016FB9)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF016FB9)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(

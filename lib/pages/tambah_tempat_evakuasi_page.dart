@@ -32,7 +32,7 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF016FB9)),
+          icon: const Icon(Icons.arrow_back_ios, color: Color(0xFF016FB9)),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(

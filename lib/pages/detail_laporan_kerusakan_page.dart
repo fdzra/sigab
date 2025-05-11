@@ -51,7 +51,7 @@ class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage>
                       child: Row(
                         children: [
                           Text(
-                            'Lokasi',
+                            'Koordinat Lokasi',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
