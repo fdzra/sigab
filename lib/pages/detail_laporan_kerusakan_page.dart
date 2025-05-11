@@ -3,7 +3,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 class DetailLaporanKerusakanPage extends StatefulWidget {
-  final String name;
+  final String whatsapp;  // Diubah dari name
   final String location;
   final String description;
   final String imageUrl;
@@ -12,7 +12,7 @@ class DetailLaporanKerusakanPage extends StatefulWidget {
 
   const DetailLaporanKerusakanPage({
     Key? key,
-    required this.name,
+    required this.whatsapp,  // Diubah dari name
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -280,7 +280,7 @@ class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage>
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.name,
+          widget.whatsapp,  // Error: Property 'name' doesn't exist
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -294,7 +294,18 @@ class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Map Section
+            const SizedBox(height: 16), // Menambahkan jarak di bagian atas
+            // Koordinat Lokasi Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Koordinat Lokasi',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             _buildMapSection(),
 
             // Location Section
@@ -320,7 +331,7 @@ class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage>
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                widget.location,
+                widget.location,  // Mengubah dari widget.whatsapp ke widget.location
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black87,

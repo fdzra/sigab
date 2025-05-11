@@ -5,7 +5,7 @@ import 'histori_verifikasi_page.dart';
 
 class LaporanBanjir {
   final String id;
-  final String name;
+  final String whatsapp;  
   final String description;
   final DateTime date;
   final String time;
@@ -14,7 +14,7 @@ class LaporanBanjir {
 
   LaporanBanjir({
     required this.id,
-    required this.name,
+    required this.whatsapp,  
     required this.description,
     required this.date,
     required this.time,
@@ -32,19 +32,20 @@ class LaporanBanjirPage extends StatefulWidget {
 
 class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
   // Dummy data untuk development
+  // Pada bagian list data:
   final List<LaporanBanjir> _laporanList = [
     LaporanBanjir(
       id: '1',
-      name: 'Fadhilah',
+      whatsapp: '081234567890',  
       description: 'Terjadi banjir di daerah umayah 1 sukabirus sejak pagi jam setengan 9, kos saya kena banjir selutut.',
       date: DateTime(2025, 4, 1),
       time: '8:05 WIB',
-      latitude: -6.975368,  // Koordinat Bojongsoang
+      latitude: -6.975368,
       longitude: 107.631033,
     ),
     LaporanBanjir(
-      id: '2',
-      name: 'Farel',
+      id: '2', 
+      whatsapp: '081234567891',  
       description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
       date: DateTime(2025, 4, 1),
       time: '7:45 WIB',
@@ -53,7 +54,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
     ),
     LaporanBanjir(
       id: '3',
-      name: 'Dharu',
+      whatsapp: '081234567892',  
       description: 'Tadi pagi di sekitar rumah, terlihat genangan air akibat hujan lebat semalam. Beberapa saluran drainase tampak tersumbat, menyebabkan air meluap ke jalanan.',
       date: DateTime(2025, 4, 1),
       time: '7:38 WIB',
@@ -62,7 +63,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
     ),
     LaporanBanjir(
       id: '4',
-      name: 'Jeisa',
+      whatsapp: '081234567893',  
       description: 'Banjir cukup besar dengan ketinggian air mencapai 1 meter di beberapa titik. Jalan utama terendam, menghambat akses transportasi.',
       date: DateTime(2025, 4, 1),
       time: '7:20 WIB',
@@ -122,7 +123,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
               itemBuilder: (context, index) {
                 final laporan = _laporanList[index];
                 return FloodReportCard(
-                  name: laporan.name,
+                  whatsapp: laporan.whatsapp,
                   location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
                   description: laporan.description,
                   imageUrl: 'https://picsum.photos/800/600',
@@ -141,7 +142,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
 }
 
 class FloodReportCard extends StatelessWidget {
-  final String name;
+  final String whatsapp;  
   final String location;
   final String description;
   final String imageUrl;
@@ -152,7 +153,7 @@ class FloodReportCard extends StatelessWidget {
 
   const FloodReportCard({
     Key? key,
-    required this.name,
+    required this.whatsapp,  
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -164,13 +165,13 @@ class FloodReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Shorten the description for the card view
     String shortDescription = description.length > 40 
         ? '${description.substring(0, 40)}...' 
         : description;
 
     return Container(
-      width: double.infinity,
+      width: double.infinity, 
+      height: 112,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -201,7 +202,7 @@ class FloodReportCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailLaporanBanjirPage(
-                  name: name,
+                  whatsapp: whatsapp,
                   location: location,
                   description: description,
                   imageUrl: imageUrl,
@@ -223,33 +224,37 @@ class FloodReportCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        name,
+                        whatsapp,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
                       Text(
                         shortDescription,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                         ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(width: 16),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       DateFormat('dd/MM/yyyy').format(date),
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 14,
+                        fontSize: 14
+                        ,
                       ),
                     ),
                     const SizedBox(height: 4),

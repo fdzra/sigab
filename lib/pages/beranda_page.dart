@@ -843,8 +843,8 @@ class _BerandaContentState extends State<BerandaContent> {
             ),
             const SizedBox(height: 8),
             FloodReportCard(
-              name: 'Fadhilah',
-              location: 'Cileunyi',
+              whatsapp: '081234567890',  // 
+              location: 'Jl. Sukabirus, sebagian Jl. Radio Palasari, sebagian area hulu sungai Cigede',
               description: 'Terjadi banjir di daerah umayah 1 sukabirus sejak pagi jam setengan 9, kos saya kena banjir selutut.',
               imageUrl: 'https://picsum.photos/800/600',
               latitude: -6.975368,
@@ -852,11 +852,11 @@ class _BerandaContentState extends State<BerandaContent> {
               date: DateTime(2025, 4, 1),
               time: '8:05 WIB',
             ),
-            const SizedBox(height: 2), 
+            const SizedBox(height: 2),
             FloodReportCard(
-              name: 'Farel',
+              whatsapp: '081234567891',  
               description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
-              location: 'Bojongsoang',
+              location: 'Jl. Radio Palasari, Sebagian hulu sungai Cigede',
               imageUrl: 'https://picsum.photos/800/600',
               latitude: -6.974567,
               longitude: 107.630521,

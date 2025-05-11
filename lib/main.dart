@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFF016FB9),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFF016FB9),
-          selectionColor: Color(0xFFC4DAE9), // Warna background highlight teks
+          selectionColor: Color(0xFFC4DAE9), 
         ),
       ),
-      initialRoute: '/login',
+      initialRoute: '/login', 
       onGenerateRoute: (settings) {
         if (settings.name == '/detail-laporan-banjir') {
           return DetailLaporanBanjirPage.route(settings);

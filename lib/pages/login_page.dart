@@ -36,7 +36,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              // Subtitle
               const Text(
                 'Masukkan username dan password!',
                 style: TextStyle(
@@ -46,7 +45,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 32),
-              // Username label
               const Text(
                 'Username',
                 style: TextStyle(
@@ -56,7 +54,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              // Username field
               TextField(
                 style: const TextStyle(
                   color: Colors.black,
@@ -93,7 +90,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 16),
-              // Password label
               const Text(
                 'Password',
                 style: TextStyle(
@@ -103,7 +99,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              // Password field
               TextField(
                 obscureText: !_isPasswordVisible,
                 style: const TextStyle(

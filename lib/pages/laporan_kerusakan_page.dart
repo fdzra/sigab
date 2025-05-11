@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'detail_laporan_kerusakan_page.dart';
 
 class LaporanKerusakanCard extends StatelessWidget {
-  final String name;
+  final String whatsapp;  
   final String location;
   final String description;
   final String imageUrl;
@@ -14,7 +14,7 @@ class LaporanKerusakanCard extends StatelessWidget {
 
   const LaporanKerusakanCard({
     Key? key,
-    required this.name,
+    required this.whatsapp,  
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -63,7 +63,7 @@ class LaporanKerusakanCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailLaporanKerusakanPage(
-                  name: name,
+                  whatsapp: whatsapp,  
                   location: location,
                   description: description,
                   imageUrl: imageUrl,
@@ -84,7 +84,7 @@ class LaporanKerusakanCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
+                        whatsapp,  
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -113,7 +113,7 @@ class LaporanKerusakanCard extends StatelessWidget {
                       DateFormat('dd/MM/yyyy').format(date),
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -121,7 +121,7 @@ class LaporanKerusakanCard extends StatelessWidget {
                       time,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -166,7 +166,7 @@ class LaporanKerusakanPage extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         children: [
           LaporanKerusakanCard(
-            name: 'Fadhilah',
+            whatsapp: '081234567890',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Jembatan penghubung antar desa mengalami kerusakan akibat banjir, perlu perbaikan segera untuk akses warga.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -176,7 +176,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.631033,
           ),
           LaporanKerusakanCard(
-            name: 'Farel',
+            whatsapp: '081234567891',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Retakan besar di jalan utama desa setelah banjir surut, membahayakan pengendara yang melintas.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -186,7 +186,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.632145,
           ),
           LaporanKerusakanCard(
-            name: 'Dharu',
+            whatsapp: '081234567892',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Saluran drainase rusak parah di beberapa titik, perlu perbaikan untuk mencegah banjir susulan.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -196,7 +196,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.630789,
           ),
           LaporanKerusakanCard(
-            name: 'Jeisa',
+            whatsapp: '081234567893',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Tanggul sungai jebol di beberapa lokasi, perlu penanganan cepat untuk mencegah banjir susulan.',
             imageUrl: 'https://picsum.photos/800/600',

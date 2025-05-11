@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'histori_verifikasi_page.dart';
 
 class DetailLaporanBanjirPage extends StatefulWidget {
-  final String name;
+  final String whatsapp;  
   final String location;
   final String description;
   final String imageUrl;
@@ -13,7 +13,7 @@ class DetailLaporanBanjirPage extends StatefulWidget {
 
   const DetailLaporanBanjirPage({
     Key? key,
-    required this.name,
+    required this.whatsapp,  
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -25,7 +25,7 @@ class DetailLaporanBanjirPage extends StatefulWidget {
     final args = settings.arguments as Map<String, dynamic>;
     return MaterialPageRoute(
       builder: (context) => DetailLaporanBanjirPage(
-        name: args['name'] as String,
+        whatsapp: args['whatsapp'] as String,  // Diubah dari name
         location: args['location'] as String,
         description: args['description'] as String,
         imageUrl: args['imageUrl'] as String,
@@ -467,7 +467,7 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.name,
+          widget.whatsapp,
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -481,6 +481,18 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 16), // Menambahkan jarak di bagian atas
+            // Koordinat Lokasi Section
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                'Koordinat Lokasi',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             _buildMapSection(),
 
             // Location Section
@@ -507,7 +519,7 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
-                widget.location,
+                widget.location,  // Mengubah dari widget.whatsapp ke widget.location
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black87,
