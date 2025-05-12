@@ -24,6 +24,35 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
     }
   }
 
+  String? _namaTempatError;
+  String? _linkMapsError;
+  String? _gambarError;
+
+  bool _validateInputs() {
+    bool isValid = true;
+    setState(() {
+      _namaTempatError = null;
+      _linkMapsError = null;
+      _gambarError = null;
+
+      if (_namaTempatController.text.isEmpty) {
+        _namaTempatError = 'Nama tempat tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (_linkMapsController.text.isEmpty) {
+        _linkMapsError = 'Link Google Maps tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (_selectedImage == null) {
+        _gambarError = 'Gambar harus diunggah';
+        isValid = false;
+      }
+    });
+    return isValid;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +86,7 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
               ),
             ),
             const SizedBox(height: 8),
+            // Perbaikan untuk TextField nama tempat
             TextField(
               controller: _namaTempatController,
               decoration: InputDecoration(
@@ -64,11 +94,16 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
                 hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
                 filled: true,
                 fillColor: Colors.white,
+                errorText: _namaTempatError,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9)),
                 ),
                 enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: const BorderSide(color: Color(0xFF016FB9)),
+                ),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9)),
                 ),
@@ -85,37 +120,56 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
             const SizedBox(height: 8),
             GestureDetector(
               onTap: _pickImage,
-              child: Container(
-                width: double.infinity,
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Color(0xFF016FB9)),
-                  borderRadius: BorderRadius.circular(4),
-              ),
-              child: _selectedImage != null
-                  ? Image.network(_selectedImage!, fit: BoxFit.cover)
-                  : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.add_photo_alternate_outlined),
-                            onPressed: () {
-                              // TODO: Implementasi unggah gambar
-                            },
-                          ),
-                          Text(
-                            'Tambahkan Gambar',
-                            style: GoogleFonts.poppins(
-                              color: const Color(0xFF016FB9),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: _gambarError != null ? const Color(0xFFB00020) : Color(0xFF016FB9)
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: _selectedImage != null
+                        ? Image.network(_selectedImage!, fit: BoxFit.cover)
+                        : Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.add_photo_alternate_outlined,
+                                    color: Color(0xFF016FB9),
+                                  ),
+                                  onPressed: _pickImage,
+                                ),
+                                Text(
+                                  'Tambahkan Gambar',
+                                  style: GoogleFonts.poppins(
+                                    color: const Color(0xFF016FB9),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          ],
+                  ),
+                  if (_gambarError != null)
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: Text(
+                        _gambarError!,
+                        style: GoogleFonts.poppins(
+                          color: const Color(0xFFB00020),
+                          fontSize: 12,
                         ),
                       ),
+                    ),
+                ],
               ),
             ),
             const SizedBox(height: 24),
@@ -127,6 +181,7 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
               ),
             ),
             const SizedBox(height: 8),
+            // Perbaikan untuk TextField link maps
             TextField(
               controller: _linkMapsController,
               decoration: InputDecoration(
@@ -134,6 +189,7 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
                 hintStyle: GoogleFonts.poppins(color: const Color(0xFFA0A0A0)),
                 filled: true,
                 fillColor: Colors.white,
+                errorText: _linkMapsError,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9)),
@@ -142,7 +198,11 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9)),
                 ),
-              contentPadding: const EdgeInsets.all(16),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: const BorderSide(color: Color(0xFF016FB9)),
+                ),
+                contentPadding: const EdgeInsets.all(16),
               ),
             ),
             const SizedBox(height: 32),
@@ -152,82 +212,84 @@ class _TambahTempatEvakuasiPageState extends State<TambahTempatEvakuasiPage> {
                 height: 42,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Tampilkan dialog sukses
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          backgroundColor: Colors.white,
-                          child: Container(
-                            padding: const EdgeInsets.all(24),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF3F3F3),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Icon(
-                                    Icons.check_circle_outline,
-                                    color: Color(0xFF4CAF50),
-                                    size: 48,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Sukses ditambah!',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Tempat evakuasi telah berhasil\nditambah!',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: const Color(0xFF666666),
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(); // Tutup dialog
-                                      Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFFFFA726),
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Okay',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                    if (_validateInputs()) {
+                      // Tampilkan dialog sukses
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                          ),
-                        );
-                      },
-                    );
+                            backgroundColor: Colors.white,
+                            child: Container(
+                              padding: const EdgeInsets.all(24),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF3F3F3),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check_circle_outline,
+                                      color: Color(0xFF4CAF50),
+                                      size: 48,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Sukses ditambah!',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Tempat evakuasi telah berhasil\nditambah!',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: const Color(0xFF666666),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(); // Tutup dialog
+                                        Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color(0xFFFFA726),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Okay',
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFA726),

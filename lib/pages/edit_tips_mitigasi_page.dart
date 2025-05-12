@@ -21,6 +21,34 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
   late TextEditingController _judulController;
   late TextEditingController _deskripsiController;
   String? _selectedImage;
+  String? _judulError;
+  String? _deskripsiError;
+  String? _gambarError;
+
+  bool _validateInputs() {
+    bool isValid = true;
+    setState(() {
+      _judulError = null;
+      _deskripsiError = null;
+      _gambarError = null;
+
+      if (_judulController.text.isEmpty) {
+        _judulError = 'Judul tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (_deskripsiController.text.isEmpty) {
+        _deskripsiError = 'Deskripsi tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (_selectedImage == null) {
+        _gambarError = 'Gambar harus diunggah';
+        isValid = false;
+      }
+    });
+    return isValid;
+  }
 
   @override
   void initState() {
@@ -99,6 +127,7 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
                 ),
+                errorText: _judulError,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
@@ -133,6 +162,7 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
                 ),
+                errorText: _deskripsiError,
                 contentPadding: const EdgeInsets.all(16),
               ),
             ),
@@ -150,21 +180,24 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
               height: 200,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Color(0xFF016FB9), width: 1.5),
+                border: Border.all(
+                  color: _gambarError != null ? Colors.red : const Color(0xFF016FB9),
+                  width: 1.5
+                ),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: _selectedImage != null
                   ? Stack(
-                      fit: StackFit.expand, // Menambahkan ini agar Stack mengisi seluruh ruang
+                      fit: StackFit.expand, 
                       children: [
-                        ClipRRect( // Menambahkan ClipRRect untuk memastikan gambar tidak keluar dari border
+                        ClipRRect( 
                           borderRadius: BorderRadius.circular(4),
                           child: Image.network(
                             _selectedImage!,
-                            fit: BoxFit.cover, // Mengubah kembali ke cover
+                            fit: BoxFit.cover, 
                             width: double.infinity,
                             height: double.infinity,
-                            alignment: Alignment.center, // Menambahkan alignment
+                            alignment: Alignment.center, 
                           ),
                         ),
                         Positioned(
@@ -210,83 +243,6 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
                 width: 136,
                 height: 42,
                 child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          backgroundColor: Colors.white,
-                          child: Container(
-                            padding: const EdgeInsets.all(24),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.all(12),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF3F3F3),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: const Icon(
-                                    Icons.check_circle_outline,
-                                    color: Color(0xFF4CAF50),
-                                    size: 48,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  'Sukses diubah!',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text(
-                                  'Tips mitigasi bencana telah berhasil\ndiubah!',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: const Color(0xFF666666),
-                                  ),
-                                ),
-                                const SizedBox(height: 24), // Mengubah dari 16 menjadi 24
-                                SizedBox(
-                                  width: double.infinity,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop(); // Tutup dialog
-                                      Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFFFFA726),
-                                      padding: const EdgeInsets.symmetric(vertical: 12),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Okay',
-                                      style: GoogleFonts.poppins(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFA726),
                     padding: const EdgeInsets.symmetric(vertical: 12),
@@ -294,6 +250,85 @@ class _EditTipsMitigasiPageState extends State<EditTipsMitigasiPage> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
+                  onPressed: () {
+                    if (_validateInputs()) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            backgroundColor: Colors.white,
+                            child: Container(
+                              padding: const EdgeInsets.all(24),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF3F3F3),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.check_circle_outline,
+                                      color: Color(0xFF4CAF50),
+                                      size: 48,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Sukses diubah!',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Tips mitigasi bencana telah berhasil\ndiubah!',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: const Color(0xFF666666),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 24), // Mengubah dari 16 menjadi 24
+                                  SizedBox(
+                                    width: double.infinity,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(); // Tutup dialog
+                                        Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                                      },
+                                      style: ElevatedButton.styleFrom( // Pindahkan keluar dari onPressed
+                                        backgroundColor: const Color(0xFFFFA726),
+                                        padding: const EdgeInsets.symmetric(vertical: 12),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      child: Text( // Pindahkan keluar dari onPressed
+                                        'Ubah',
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  },
                   child: Text(
                     'Ubah',
                     style: GoogleFonts.poppins(

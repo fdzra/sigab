@@ -21,16 +21,39 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
   double? longitude;
 
   final List<String> depthLevels = ['Rendah', 'Sedang', 'Tinggi'];
+  final TextEditingController _wilayahController = TextEditingController();
+  String? _wilayahError;
+  String? _depthError;
+  String? _koordinatError;
 
-  @override
-  void initState() {
-    super.initState();
-    // Add listener to depth controller
-    depthController.addListener(_updateDepthLevel);
+  bool _validateInputs() {
+    bool isValid = true;
+    setState(() {
+      _wilayahError = null;
+      _depthError = null;
+      _koordinatError = null;
+
+      if (_wilayahController.text.isEmpty) {
+        _wilayahError = 'Wilayah banjir tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (depthController.text.isEmpty) {
+        _depthError = 'Tingkat kedalaman tidak boleh kosong';
+        isValid = false;
+      }
+
+      if (latitude == null || longitude == null) {
+        _koordinatError = 'Koordinat lokasi harus ditentukan';
+        isValid = false;
+      }
+    });
+    return isValid;
   }
 
   @override
   void dispose() {
+    _wilayahController.dispose();
     depthController.removeListener(_updateDepthLevel);
     depthController.dispose();
     super.dispose();
@@ -173,6 +196,7 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
             ),
             const SizedBox(height: 8),
             TextField(
+              controller: _wilayahController,
               style: GoogleFonts.poppins(),
               decoration: InputDecoration(
                 hintText: 'Masukkan wilayah banjir',
@@ -191,6 +215,7 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
                 ),
+                errorText: _wilayahError,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
@@ -229,6 +254,7 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                   borderRadius: BorderRadius.circular(4),
                   borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
                 ),
+                errorText: _depthError,  
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
@@ -384,7 +410,10 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
               height: 200,
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: const Color(0xFF016FB9), width: 1.5),
+                border: Border.all(
+                  color: _koordinatError != null ? Colors.red : const Color(0xFF016FB9),
+                  width: 1.5
+                ),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: InkWell(
@@ -479,6 +508,17 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                 ),
               ),
             ),
+            if (_koordinatError != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 16),
+                child: Text(
+                  _koordinatError!,
+                  style: GoogleFonts.poppins(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             const SizedBox(height: 24),
             Center(
               child: SizedBox(
@@ -486,8 +526,9 @@ class _TambahInformasiBanjirPageState extends State<TambahInformasiBanjirPage> {
                 height: 35,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Show success dialog
-                    _showSuccessDialog(context);
+                    if (_validateInputs()) {
+                      _showSuccessDialog(context);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFA726),

@@ -118,7 +118,7 @@ class _DetailBanjirTerkiniPageState extends State<DetailBanjirTerkiniPage> {
                                 shape: BoxShape.circle,
                               ),
                               child: const Icon(
-                                Icons.home,
+                                Icons.flood,
                                 color: Colors.white,
                                 size: 20,
                               ),
@@ -246,7 +246,7 @@ class _DetailBanjirTerkiniPageState extends State<DetailBanjirTerkiniPage> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(
-                                      Icons.home,
+                                      Icons.flood,
                                       color: Colors.white,
                                       size: 20,
                                     ),

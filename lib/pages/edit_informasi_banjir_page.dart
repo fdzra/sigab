@@ -146,26 +146,29 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close dialog
-                      Navigator.of(context).pop(); // Return to previous screen
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFFA726),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                Center(
+                  child: SizedBox(
+                    width: 136,
+                    height: 35,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close dialog
+                        Navigator.of(context).pop(); // Return to previous screen
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFA726),
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'Okay',
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                      child: Text(
+                        'Ubah',
+                        style: GoogleFonts.poppins(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -176,6 +179,57 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
         );
       },
     );
+  }
+
+  // Tambahkan variabel untuk tracking error
+  String? _wilayahError;
+  String? _kedalamanError;
+  // _waktuError dihapus
+
+  void _validateAndSubmit() {
+    // Reset error messages
+    setState(() {
+      _wilayahError = null;
+      _kedalamanError = null;
+      // _waktuError dihapus dari reset
+    });
+
+    // Validasi input
+    bool isValid = true;
+
+    if (_wilayahController.text.trim().isEmpty) {
+      setState(() {
+        _wilayahError = 'Wilayah banjir harus diisi';
+      });
+      isValid = false;
+    }
+
+    if (_kedalaman1Controller.text.trim().isEmpty) {
+      setState(() {
+        _kedalamanError = 'Tingkat kedalaman harus diisi';
+      });
+      isValid = false;
+    } else {
+      try {
+        int depth = int.parse(_kedalaman1Controller.text);
+        if (depth <= 0) {
+          setState(() {
+            _kedalamanError = 'Tingkat kedalaman harus lebih dari 0';
+          });
+          isValid = false;
+        }
+      } catch (e) {
+        setState(() {
+          _kedalamanError = 'Tingkat kedalaman harus berupa angka';
+        });
+        isValid = false;
+      }
+    }
+
+    // Jika semua validasi berhasil, tampilkan dialog sukses
+    if (isValid) {
+      _showSuccessDialog(context);
+    }
   }
 
   @override
@@ -224,16 +278,27 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _wilayahError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _wilayahError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _wilayahError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
+                  errorText: _wilayahError,
+                  errorStyle: GoogleFonts.poppins(color: Colors.red),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
@@ -265,16 +330,27 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                   suffixStyle: GoogleFonts.poppins(color: const Color(0xFF016FB9)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _kedalamanError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _kedalamanError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
-                    borderSide: const BorderSide(color: Color(0xFF016FB9), width: 1.5),
+                    borderSide: BorderSide(
+                      color: _kedalamanError != null ? Colors.red : const Color(0xFF016FB9),
+                      width: 1.5
+                    ),
                   ),
+                  errorText: _kedalamanError,
+                  errorStyle: GoogleFonts.poppins(color: Colors.red),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 ),
               ),
@@ -623,10 +699,7 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                 width: 136,
                 height: 35,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Show success dialog
-                    _showSuccessDialog(context);
-                  },
+                  onPressed: _validateAndSubmit,  // Hanya memanggil fungsi validasi
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFFA726),
                     padding: EdgeInsets.zero,
@@ -645,6 +718,7 @@ class _EditInformasiBanjirPageState extends State<EditInformasiBanjirPage> {
                 ),
               ),
             ),
+            const SizedBox(height: 24),
           ],
         ),
       ),

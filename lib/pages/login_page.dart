@@ -10,6 +10,36 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isPasswordVisible = false;
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String? _usernameError;
+  String? _passwordError;
+
+  void _validateAndLogin() {
+    setState(() {
+      _usernameError = null;
+      _passwordError = null;
+
+      if (_usernameController.text.isEmpty) {
+        _usernameError = 'Username tidak boleh kosong';
+      }
+      
+      if (_passwordController.text.isEmpty) {
+        _passwordError = 'Password tidak boleh kosong';
+      }
+
+      if (_usernameError == null && _passwordError == null) {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 8),
               TextField(
+                controller: _usernameController,
                 style: const TextStyle(
                   color: Colors.black,
                 ),
@@ -83,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Color(0xFFCFCFCF),
                     ),
                   ),
+                  errorText: _usernameError,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
@@ -100,6 +132,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 8),
               TextField(
+                controller: _passwordController,
                 obscureText: !_isPasswordVisible,
                 style: const TextStyle(
                   color: Colors.black,
@@ -129,6 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Color(0xFFCFCFCF),
                     ),
                   ),
+                  errorText: _passwordError,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 16,
@@ -147,11 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Login button
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/home');
-                },
+                onPressed: _validateAndLogin,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFBB03B),
                   padding: const EdgeInsets.symmetric(vertical: 16),
@@ -174,4 +205,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-} 
+}

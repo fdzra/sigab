@@ -130,7 +130,7 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: const Icon(
-                                      Icons.home,
+                                      Icons.flood,
                                       color: Colors.white,
                                       size: 20,
                                     ),
@@ -204,7 +204,7 @@ class _DetailRiwayatBanjirPageState extends State<DetailRiwayatBanjirPage> {
                                                       shape: BoxShape.circle,
                                                     ),
                                                     child: const Icon(
-                                                      Icons.home,
+                                                      Icons.flood,
                                                       color: Colors.white,
                                                       size: 20,
                                                     ),

@@ -343,7 +343,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Icon(
-                                                          Icons.home,
+                                                          Icons.flood,
                                                           color: Colors.white,
                                                           size: 20,
                                                         ),
@@ -397,7 +397,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Icon(
-                                                          Icons.home,
+                                                          Icons.flood,
                                                           color: Colors.white,
                                                           size: 20,
                                                         ),
@@ -451,7 +451,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Icon(
-                                                          Icons.home,
+                                                          Icons.flood,
                                                           color: Colors.white,
                                                           size: 20,
                                                         ),
@@ -594,7 +594,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Icon(
-                                                Icons.home,
+                                                Icons.flood,
                                                 color: Colors.white,
                                                 size: 20,
                                               ),
