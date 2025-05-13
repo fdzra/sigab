@@ -7,7 +7,6 @@ class DetailBanjirTerkiniPage extends StatefulWidget {
   final String koordinat;
   final String tanggal;
   final String tingkatKedalaman;
-  final String jarak;
   final String wilayah;
   final Color warna;
 
@@ -16,7 +15,6 @@ class DetailBanjirTerkiniPage extends StatefulWidget {
     required this.koordinat,
     required this.tanggal,
     required this.tingkatKedalaman,
-    required this.jarak,
     required this.wilayah,
     required this.warna,
   }) : super(key: key);
@@ -346,38 +344,6 @@ class _DetailBanjirTerkiniPageState extends State<DetailBanjirTerkiniPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(
-                          Icons.swap_horiz,
-                          color: Colors.orange[700],
-                          size: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Jarak',
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              widget.jarak,
-                              style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
                     ),
                     const SizedBox(height: 12),
                     Row(

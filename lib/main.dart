@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
               koordinat: args['koordinat'] as String,
               tanggal: args['tanggal'] as String,
               tingkatKedalaman: args['tingkatKedalaman'] as String,
-              jarak: args['jarak'] as String,
               wilayah: args['wilayah'] as String,
               warna: args['warna'] as Color,
             ),

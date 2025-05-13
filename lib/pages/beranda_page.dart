@@ -314,7 +314,6 @@ class _BerandaContentState extends State<BerandaContent> {
                                                       koordinat: 'Citeureup (-6.9175 LS, 107.6191 BT)',
                                                       tanggal: '20 Januari 2024, 08:30 WIB',
                                                       tingkatKedalaman: 'Tinggi',
-                                                      jarak: '10 Km dari lokasi anda',
                                                       wilayah: 'Jl. Radio Palasari, Sebagian hulu sungai Cigede',
                                                       warna: const Color(0xFFE60000),
                                                     ),
@@ -368,7 +367,6 @@ class _BerandaContentState extends State<BerandaContent> {
                                                       koordinat: 'Citeureup (-6.9200 LS, 107.6150 BT)',
                                                       tanggal: '15 Januari 2024, 14:20 WIB',
                                                       tingkatKedalaman: 'Sedang',
-                                                      jarak: '8 Km dari lokasi anda',
                                                       wilayah: 'Jl. Radio Palasari, Sebagian hulu sungai Cigede',
                                                       warna: const Color(0xFFF6AE2D),
                                                     ),
@@ -418,11 +416,10 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailBanjirTerkiniPage(
+                                                    builder: (context) => DetailRiwayatBanjirPage(
                                                       koordinat: 'Citeureup (-6.9150 LS, 107.6170 BT)',
                                                       tanggal: '10 Januari 2024, 10:15 WIB',
                                                       tingkatKedalaman: 'Rendah',
-                                                      jarak: '12 Km dari lokasi anda',
                                                       wilayah: 'Jl. Sukabirus, sebagian Jl. Radio Palasari, sebagian area hulu sungai Cigede',
                                                       warna: const Color(0xFF0EDD06),
                                                     ),
@@ -698,7 +695,6 @@ class _BerandaContentState extends State<BerandaContent> {
                         koordinat: 'Citeureup (0.07 LS, 109.37 BT)',
                         tanggal: 'Senin, 7 April 2025, 12.27 WIB',
                         tingkatKedalaman: 'Rendah',
-                        jarak: '10 Km dari lokasi anda',
                         wilayah: 'Jl. Sukabirus, sebagian Jl. Radio Palasari, sebagian area hulu sungai Cigede',
                         warna: const Color(0xFF0EDD06),
                       ),
@@ -754,32 +750,6 @@ class _BerandaContentState extends State<BerandaContent> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Icon(Icons.swap_horiz, color: Colors.orange[400], size: 20),
-                          const SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Jarak',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              Text(
-                                '10 Km dari lokasi anda',
-                                style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                       const SizedBox(height: 10),
                       Row(

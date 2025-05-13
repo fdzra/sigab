@@ -86,7 +86,6 @@ class RiwayatBanjirPage extends StatelessWidget {
                 koordinat: koordinat,
                 tanggal: tanggal,
                 tingkatKedalaman: tingkatKedalaman,
-                jarak: jarak,
                 wilayah: wilayah,
                 warna: warna,
               ),
@@ -129,50 +128,24 @@ class RiwayatBanjirPage extends StatelessWidget {
               ),
               const SizedBox(height: 6), // Mengubah height dari 8 menjadi 6
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4), // Mengubah padding
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: warna,
-                  borderRadius: BorderRadius.circular(12), // Mengubah radius dari 16 menjadi 12
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   'Tingkat Kedalaman: $tingkatKedalaman',
                   style: GoogleFonts.poppins(
-                    fontSize: 12, // Mengubah fontSize dari 14 menjadi 12
+                    fontSize: 12,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              const SizedBox(height: 12), // Mengubah height dari 16 menjadi 12
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  Icon(Icons.swap_horiz, color: Colors.orange[400], size: 20), // Mengubah size dari 24 menjadi 20
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Jarak',
-                        style: GoogleFonts.poppins(
-                          fontSize: 12, // Mengubah fontSize dari 14 menjadi 12
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      Text(
-                        jarak,
-                        style: GoogleFonts.poppins(
-                          fontSize: 14, // Mengubah fontSize dari 16 menjadi 14
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10), // Mengubah height dari 12 menjadi 10
-              Row(
-                children: [
-                  Icon(Icons.flag, color: Colors.orange[400], size: 20), // Mengubah size dari 24 menjadi 20
+                  Icon(Icons.flag, color: Colors.orange[400], size: 20),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Column(
@@ -181,14 +154,14 @@ class RiwayatBanjirPage extends StatelessWidget {
                         Text(
                           'Wilayah Banjir',
                           style: GoogleFonts.poppins(
-                            fontSize: 12, // Mengubah fontSize dari 14 menjadi 12
+                            fontSize: 12,
                             color: Colors.grey[600],
                           ),
                         ),
                         Text(
                           wilayah,
                           style: GoogleFonts.poppins(
-                            fontSize: 14, // Mengubah fontSize dari 16 menjadi 14
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
