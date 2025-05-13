@@ -25,7 +25,6 @@ class TempatEvakuasiPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3F3F3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
@@ -131,7 +130,6 @@ class TempatEvakuasiPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3F3F3),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
