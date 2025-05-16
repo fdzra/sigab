@@ -24,28 +24,28 @@ class _HistoriVerifikasiPageState extends State<HistoriVerifikasiPage> {
   // Dummy data untuk laporan yang diterima
   final List<VerificationItem> _acceptedReports = [
     VerificationItem(
-      whatsapp: '08123456789',
+      name: 'Fadhilah',  
       description: 'Terjadi banjir di daerah umayah 1 sukabirus sejak pagi jam setengan 9, kos saya kena banjir selutut.',
       date: '01/04/2025',
       time: '8:05 WIB',
       isValid: true,
     ),
     VerificationItem(
-      whatsapp: '08234567890',
+      name: 'Farel', 
       description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
       date: '01/04/2025',
       time: '7:45 WIB',
       isValid: true,
     ),
     VerificationItem(
-      whatsapp: '08345678901',
+      name: 'Dharu',  
       description: 'Tadi pagi di sekitar rumah, terlihat genangan air akibat hujan lebat semalam. Beberapa saluran drainase tampak tersumbat, menyebabkan air meluap ke jalanan.',
       date: '01/04/2025',
       time: '7:38 WIB',
       isValid: true,
     ),
     VerificationItem(
-      whatsapp: '08456789012',
+      name: 'Jeisa',  
       description: 'Banjir cukup besar dengan ketinggian air mencapai 1 meter di beberapa titik. Jalan utama terendam, menghambat akses transportasi.',
       date: '01/04/2025',
       time: '7:20 WIB',
@@ -56,28 +56,28 @@ class _HistoriVerifikasiPageState extends State<HistoriVerifikasiPage> {
   // Dummy data untuk laporan yang ditolak
   final List<VerificationItem> _rejectedReports = [
     VerificationItem(
-      whatsapp: '08567890123',
+      name: 'Andi',  // Diubah dari whatsapp
       description: 'Ada banjir tapi boong papale pale pale paleee',
       date: '26/03/2025',
       time: '7:00 WIB',
       isValid: false,
     ),
     VerificationItem(
-      whatsapp: '08678901234',
+      name: 'Budi',  // Diubah dari whatsapp
       description: 'Banjir banjirrr banjir Banjir banjir banjirrr',
       date: '19/03/2025',
       time: '6:12 WIB',
       isValid: false,
     ),
     VerificationItem(
-      whatsapp: '08789012345',
+      name: 'Citra',  // Diubah dari whatsapp
       description: 'tes tes tes tess Afaan tuch?????...',
       date: '18/03/2025',
       time: '01:30 WIB',
       isValid: false,
     ),
     VerificationItem(
-      whatsapp: '08890123456',
+      name: 'Deni',  // Diubah dari whatsapp
       description: 'Test Test tEST',
       date: '05/03/2025',
       time: '4:15 WIB',
@@ -178,14 +178,14 @@ class _HistoriVerifikasiPageState extends State<HistoriVerifikasiPage> {
 }
 
 class VerificationItem {
-  final String whatsapp;
+  final String name;  // Diubah dari whatsapp
   final String description;
   final String date;
   final String time;
   final bool isValid;
 
   VerificationItem({
-    required this.whatsapp,
+    required this.name,  // Diubah dari whatsapp
     required this.description,
     required this.date,
     required this.time,
@@ -247,7 +247,7 @@ class VerificationCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      report.whatsapp,
+                      report.name,  // Diubah dari report.whatsapp
                       style: const TextStyle(
                         color: Color(0xFF016FB9),
                         fontSize: 16,

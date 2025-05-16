@@ -5,7 +5,7 @@ import 'histori_verifikasi_page.dart';
 
 class LaporanBanjir {
   final String id;
-  final String whatsapp;  
+  final String name;  // Diubah dari whatsapp
   final String description;
   final DateTime date;
   final String time;
@@ -14,7 +14,7 @@ class LaporanBanjir {
 
   LaporanBanjir({
     required this.id,
-    required this.whatsapp,  
+    required this.name,  // Diubah dari whatsapp
     required this.description,
     required this.date,
     required this.time,
@@ -36,7 +36,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
   final List<LaporanBanjir> _laporanList = [
     LaporanBanjir(
       id: '1',
-      whatsapp: '081234567890',  
+      name: 'Fadhilah',  // Diubah dari whatsapp
       description: 'Terjadi banjir di daerah umayah 1 sukabirus sejak pagi jam setengan 9, kos saya kena banjir selutut.',
       date: DateTime(2025, 4, 1),
       time: '8:05 WIB',
@@ -45,7 +45,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
     ),
     LaporanBanjir(
       id: '2', 
-      whatsapp: '081234567891',  
+      name: 'Farel',  // Diubah dari whatsapp
       description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
       date: DateTime(2025, 4, 1),
       time: '7:45 WIB',
@@ -54,7 +54,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
     ),
     LaporanBanjir(
       id: '3',
-      whatsapp: '081234567892',  
+      name: 'Dharu',  // Diubah dari whatsapp
       description: 'Tadi pagi di sekitar rumah, terlihat genangan air akibat hujan lebat semalam. Beberapa saluran drainase tampak tersumbat, menyebabkan air meluap ke jalanan.',
       date: DateTime(2025, 4, 1),
       time: '7:38 WIB',
@@ -63,7 +63,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
     ),
     LaporanBanjir(
       id: '4',
-      whatsapp: '081234567893',  
+      name: 'Jeisa',  // Diubah dari whatsapp
       description: 'Banjir cukup besar dengan ketinggian air mencapai 1 meter di beberapa titik. Jalan utama terendam, menghambat akses transportasi.',
       date: DateTime(2025, 4, 1),
       time: '7:20 WIB',
@@ -123,7 +123,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
               itemBuilder: (context, index) {
                 final laporan = _laporanList[index];
                 return FloodReportCard(
-                  whatsapp: laporan.whatsapp,
+                  name: laporan.name,  // Diubah dari whatsapp
                   location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
                   description: laporan.description,
                   imageUrl: 'https://picsum.photos/800/600',
@@ -142,7 +142,7 @@ class _LaporanBanjirPageState extends State<LaporanBanjirPage> {
 }
 
 class FloodReportCard extends StatelessWidget {
-  final String whatsapp;  
+  final String name;  // Diubah dari whatsapp
   final String location;
   final String description;
   final String imageUrl;
@@ -153,7 +153,7 @@ class FloodReportCard extends StatelessWidget {
 
   const FloodReportCard({
     Key? key,
-    required this.whatsapp,  
+    required this.name,  // Diubah dari whatsapp
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -202,7 +202,7 @@ class FloodReportCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailLaporanBanjirPage(
-                  whatsapp: whatsapp,
+                  name: name,  
                   location: location,
                   description: description,
                   imageUrl: imageUrl,
@@ -224,7 +224,7 @@ class FloodReportCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        whatsapp,
+                        name,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,

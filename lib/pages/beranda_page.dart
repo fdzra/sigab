@@ -310,7 +310,7 @@ class _BerandaContentState extends State<BerandaContent> {
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (context) => DetailBanjirTerkiniPage(  
+                                                    builder: (context) => DetailBanjirTerkiniPage(
                                                       koordinat: 'Citeureup (-6.9175 LS, 107.6191 BT)',
                                                       tanggal: '20 Januari 2024, 08:30 WIB',
                                                       tingkatKedalaman: 'Tinggi',
@@ -813,7 +813,7 @@ class _BerandaContentState extends State<BerandaContent> {
             ),
             const SizedBox(height: 8),
             FloodReportCard(
-              whatsapp: '081234567890',  // 
+              name: 'Fadhilah',  // 
               location: 'Jl. Sukabirus, sebagian Jl. Radio Palasari, sebagian area hulu sungai Cigede',
               description: 'Terjadi banjir di daerah umayah 1 sukabirus sejak pagi jam setengan 9, kos saya kena banjir selutut.',
               imageUrl: 'https://picsum.photos/800/600',
@@ -824,7 +824,7 @@ class _BerandaContentState extends State<BerandaContent> {
             ),
             const SizedBox(height: 2),
             FloodReportCard(
-              whatsapp: '081234567891',  
+              name: 'Farel',  
               description: 'Ada tanda-tanda banjir di beberapa wilayah, seperti hujan deras yang berlangsung lama, genangan air di jalan.',
               location: 'Jl. Radio Palasari, Sebagian hulu sungai Cigede',
               imageUrl: 'https://picsum.photos/800/600',

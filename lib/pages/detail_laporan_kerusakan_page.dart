@@ -3,7 +3,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 class DetailLaporanKerusakanPage extends StatefulWidget {
-  final String whatsapp;  // Diubah dari name
+  final String name;  
   final String location;
   final String description;
   final String imageUrl;
@@ -12,7 +12,7 @@ class DetailLaporanKerusakanPage extends StatefulWidget {
 
   const DetailLaporanKerusakanPage({
     Key? key,
-    required this.whatsapp,  // Diubah dari name
+    required this.name,  
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -280,7 +280,7 @@ class _DetailLaporanKerusakanPageState extends State<DetailLaporanKerusakanPage>
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.whatsapp,  // Error: Property 'name' doesn't exist
+          widget.name,  
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,

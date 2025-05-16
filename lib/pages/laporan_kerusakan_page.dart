@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'detail_laporan_kerusakan_page.dart';
-
-class LaporanKerusakanCard extends StatelessWidget {
-  final String whatsapp;  
+import 'detail_laporan_kerusakan_page.dart';class LaporanKerusakanCard extends StatelessWidget {
+  final String name;  
   final String location;
   final String description;
   final String imageUrl;
@@ -14,7 +12,7 @@ class LaporanKerusakanCard extends StatelessWidget {
 
   const LaporanKerusakanCard({
     Key? key,
-    required this.whatsapp,  
+    required this.name,  
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -63,7 +61,7 @@ class LaporanKerusakanCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => DetailLaporanKerusakanPage(
-                  whatsapp: whatsapp,  
+                  name: name,  
                   location: location,
                   description: description,
                   imageUrl: imageUrl,
@@ -84,7 +82,7 @@ class LaporanKerusakanCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        whatsapp,  
+                        name,  
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -166,7 +164,7 @@ class LaporanKerusakanPage extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         children: [
           LaporanKerusakanCard(
-            whatsapp: '081234567890',  
+            name: 'Fadhilah',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Jembatan penghubung antar desa mengalami kerusakan akibat banjir, perlu perbaikan segera untuk akses warga.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -176,7 +174,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.631033,
           ),
           LaporanKerusakanCard(
-            whatsapp: '081234567891',  
+            name: 'Farel',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Retakan besar di jalan utama desa setelah banjir surut, membahayakan pengendara yang melintas.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -186,7 +184,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.632145,
           ),
           LaporanKerusakanCard(
-            whatsapp: '081234567892',  
+            name: 'Dharu', 
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Saluran drainase rusak parah di beberapa titik, perlu perbaikan untuk mencegah banjir susulan.',
             imageUrl: 'https://picsum.photos/800/600',
@@ -196,7 +194,7 @@ class LaporanKerusakanPage extends StatelessWidget {
             longitude: 107.630789,
           ),
           LaporanKerusakanCard(
-            whatsapp: '081234567893',  
+            name: 'Jeisa',  
             location: 'Jl. Hj. Umayah 1 sukabirus, Citeureup, Dayeuhkolot, Bandung Regency, West Java 40257',
             description: 'Tanggul sungai jebol di beberapa lokasi, perlu penanganan cepat untuk mencegah banjir susulan.',
             imageUrl: 'https://picsum.photos/800/600',

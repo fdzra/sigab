@@ -4,7 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'histori_verifikasi_page.dart';
 
 class DetailLaporanBanjirPage extends StatefulWidget {
-  final String whatsapp;  
+  final String name;  // Diubah dari whatsapp
   final String location;
   final String description;
   final String imageUrl;
@@ -13,7 +13,7 @@ class DetailLaporanBanjirPage extends StatefulWidget {
 
   const DetailLaporanBanjirPage({
     Key? key,
-    required this.whatsapp,  
+    required this.name,  // Diubah dari whatsapp
     required this.location,
     required this.description,
     required this.imageUrl,
@@ -25,7 +25,7 @@ class DetailLaporanBanjirPage extends StatefulWidget {
     final args = settings.arguments as Map<String, dynamic>;
     return MaterialPageRoute(
       builder: (context) => DetailLaporanBanjirPage(
-        whatsapp: args['whatsapp'] as String,  // Diubah dari name
+        name: args['name'] as String,  // Diubah dari whatsapp
         location: args['location'] as String,
         description: args['description'] as String,
         imageUrl: args['imageUrl'] as String,
@@ -467,7 +467,7 @@ class _DetailLaporanBanjirPageState extends State<DetailLaporanBanjirPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          widget.whatsapp,
+          widget.name,  // Diubah dari widget.whatsapp
           style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
